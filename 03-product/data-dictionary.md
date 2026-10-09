@@ -24,7 +24,9 @@ Stores catalog items[cite: 2].
 | `category_id` | `uuid` | NO | None | FK to `sales.category(id)` (`ON DELETE RESTRICT`)[cite: 2]. |
 | `image_key` | `varchar(512)` | YES | None | Opaque external binary key (D-08)[cite: 2]. `NULL` when absent[cite: 2]. |
 | `deleted_at` | `timestamptz` | YES | None | Soft deletion timestamp (ADR-003)[cite: 2]. |
-
+### Concurrency & Audit Notes
+- **`xmin` (`xid`)**: System column managed by PostgreSQL for optimistic concurrency control (D-04 / ADR-002).
+- **No Audit Columns**: The system explicitly omits `created_at` and `updated_at` columns across all tables, avoiding non-domain triggers and keeping `sold_at` as the single business timestamp[cite: 2].
 ---
 
 ## 3. `sales.sale`
